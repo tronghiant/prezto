@@ -37,8 +37,13 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'spectrum' \
   'utility' \
+  'osx' \
+  'node' \
+  'docker'\
   'completion' \
+  'syntax-highlighting' \
   'history-substring-search' \
+  'autosuggestions' \
   'prompt'
 
 #
@@ -64,7 +69,7 @@ zstyle ':prezto:load' pmodule \
 # zstyle ':prezto:module:editor' wordchars '*?_-.[]~&;!#$%^(){}<>'
 
 # Set the key mapping style to 'emacs' or 'vi'.
-zstyle ':prezto:module:editor' key-bindings 'emacs'
+zstyle ':prezto:module:editor' key-bindings 'vi'
 
 # Auto convert .... to ../..
 # zstyle ':prezto:module:editor' dot-expansion 'yes'
@@ -77,7 +82,7 @@ zstyle ':prezto:module:editor' key-bindings 'emacs'
 #
 
 # Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'.
-# zstyle ':prezto:module:git:status:ignore' submodules 'all'
+zstyle ':prezto:module:git:status:ignore' submodules 'all'
 
 #
 # GNU Utility
@@ -91,13 +96,13 @@ zstyle ':prezto:module:editor' key-bindings 'emacs'
 #
 
 # Set the file to save the history in when an interactive shell exits.
-# zstyle ':prezto:module:history' histfile "${ZDOTDIR:-$HOME}/.zsh_history"
+zstyle ':prezto:module:history' histfile "${ZDOTDIR:-$HOME}/.zsh_history"
 
 # Set the maximum  number  of  events  stored  in  the  internal history list.
-# zstyle ':prezto:module:history' histsize 10000
+zstyle ':prezto:module:history' histsize 10000
 
 # Set the maximum number of history events to save in the history file.
-# zstyle ':prezto:module:history' savehist 10000
+zstyle ':prezto:module:history' savehist 10000
 
 #
 # History Substring Search
@@ -145,7 +150,7 @@ zstyle ':prezto:module:editor' key-bindings 'emacs'
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':prezto:module:prompt' theme 'sorin'
+zstyle ':prezto:module:prompt' theme 'powerlevel10k'
 
 # Set the working directory prompt display length.
 # By default, it is set to 'short'. Set it to 'long' (without '~' expansion)
@@ -154,7 +159,7 @@ zstyle ':prezto:module:prompt' theme 'sorin'
 
 # Set the prompt to display the return code along with an indicator for non-zero
 # return codes. This is not supported by all prompts.
-# zstyle ':prezto:module:prompt' show-return-val 'yes'
+zstyle ':prezto:module:prompt' show-return-val 'yes'
 
 #
 # Python
@@ -196,13 +201,13 @@ zstyle ':prezto:module:prompt' theme 'sorin'
 
 # Set syntax highlighters.
 # By default, only the main highlighter is enabled.
-# zstyle ':prezto:module:syntax-highlighting' highlighters \
-#   'main' \
-#   'brackets' \
-#   'pattern' \
-#   'line' \
-#   'cursor' \
-#   'root'
+zstyle ':prezto:module:syntax-highlighting' highlighters \
+  'main' \
+  'brackets' \
+  'pattern' \
+  'line' \
+  'cursor' \
+  'root'
 #
 # Set syntax highlighting styles.
 # zstyle ':prezto:module:syntax-highlighting' styles \
@@ -254,3 +259,17 @@ zstyle ':prezto:module:prompt' theme 'sorin'
 # before deleting or overwriting files. Set to 'no' to disable this safer
 # behavior.
 # zstyle ':prezto:module:utility' safe-ops 'yes'
+
+
+# autoload -Uz select-bracketed select-quoted
+# zle -N select-quoted
+# zle -N select-bracketed
+# for km in viopp visual; do
+#   bindkey -M $km -- '-' vi-up-line-or-history
+#   for c in {a,i}${(s..)^:-\'\"\`\|,./:;=+@}; do
+#     bindkey -M $km $c select-quoted
+#   done
+#   for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+#     bindkey -M $km $c select-bracketed
+#   done
+# done
