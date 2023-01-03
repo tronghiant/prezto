@@ -1,3 +1,19 @@
+# homebrew
+[[ $commands[brew] ]] && eval "$(brew shellenv | grep -v -- 'export PATH=')"
+
+fpath=(
+  ${ASDF_DIR}/completions
+  ${HOMEBREW_PREFIX}/share/zsh/site-functions
+  # ${ZDOTDIR:-$HOME}/git_completion
+  # ${ZDOTDIR:-$HOME}/zsh-users/zsh-completions/src
+  # ${ZDOTDIR:-$HOME}/zchee/zsh-completions/src/go
+  # ${ZDOTDIR:-$HOME}/zchee/zsh-completions/src/macOS
+  # ${ZDOTDIR:-$HOME}/zchee/zsh-completions/src/zsh
+  $fpath
+)
+# zstyle ':completion:*:*:git:*' script ${ZDOTDIR:-$HOME}/git_completion/git-completion.bash
+
+
 #
 # Executes commands at the start of an interactive session.
 #
@@ -11,3 +27,54 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+# memo: `compinit` will be done by zprezto's completion module after above `source ...` line
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of .zshrc
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+
+
+[[ -e ${ZDOTDIR:-$HOME}/.bash_aliases ]] && emulate sh -c 'source ${ZDOTDIR:-$HOME}/.bash_aliases'
+
+# Vim Mapping For Completion, the module zsh/complist should be loaded BEFORE autoloading compinit.
+zmodload zsh/complist
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+
+if [[ -n "$key_info" ]]; then
+  #  opt + <left> binded to vi-backward-word
+  #  opt + <right> binded to vi-forward-word
+  bindkey -M viins "$key_info[Control]b" vi-backward-blank-word
+  bindkey -M viins "$key_info[Control]f" vi-forward-blank-word
+  bindkey -M viins "$key_info[Control]a" vi-first-non-blank
+  bindkey -M viins "$key_info[Control]e" vi-add-eol
+fi
+
+# kuectl completion
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+# yarn completion
+if [[ -s "${ZDOTDIR:-$HOME}/yarn-autocompletions/yarn-autocompletions.plugin.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/yarn-autocompletions/yarn-autocompletions.plugin.zsh"
+fi
+# multipass completion
+autoload bashcompinit
+bashcompinit
+[[ $commands[multipass] ]] && emulate sh -c 'source "/Library/Application Support/com.canonical.multipass/Resources/completions/bash/multipass"'
+
+[[ -e ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh ]]  && . ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh
+
+# To customize prompt, run `p10k configure` or edit ${ZDOTDIR:-$HOME}/.p10k.zsh.
+[[ ! -f ${ZDOTDIR:-$HOME}/.p10k.zsh ]] || source ${ZDOTDIR:-$HOME}/.p10k.zsh
+
+
+[[ -e $HOME/.cargo/env ]] && . $HOME/.cargo/env
+
+# asdf
+[[ -e ~/.asdf/asdf.sh ]] && . ~/.asdf/asdf.sh # https://asdf-vm.com/#/core-manage-asdf
+[[ -e ~/.asdf/plugins/java/set-java-home.zsh ]] && . ~/.asdf/plugins/java/set-java-home.zsh
