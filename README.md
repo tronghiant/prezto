@@ -20,7 +20,7 @@ version is **4.3.11**.
 02. Clone the repository:
 
     ```console
-    git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+    git clone --recursive https://github.com/tronghiant/prezto.git "$HOME/.config/zsh/.zprezto"
     ```
 
     <details>
@@ -50,12 +50,29 @@ version is **4.3.11**.
 03. Create a new Zsh configuration by copying/linking the Zsh configuration
     files provided:
 
+    - Backup your current .zshenv file (if you want):
+      ```console
+      mv "$HOME/.zshenv" "$HOME/.zshenv.bak"
+      ```
+
+    - Link zshenv file:
+      ```console
+      ln -s "$HOME/.config/zsh/.zprezto/runcoms/zshenv" "$HOME/.zshenv"
+      ```
+
+    - Source new envs:
+      ```console
+      source "$HOME/.zshenv"
+      ```
+
+    - Linking zsh config files:
     ```console
     setopt EXTENDED_GLOB
     for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
       ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
     done
     ```
+  - Reopen you terminal app and you are done ✨
 
     **Note:** If you already have any of the given configuration files, `ln` in
     the above operation will cause an error. In simple cases, you can load

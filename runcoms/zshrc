@@ -1,5 +1,9 @@
 # homebrew
+## trip "export PATH=..." from `brew shellenv` to prevent overwrite `PATH` env
 [[ $commands[brew] ]] && eval "$(brew shellenv | grep -v -- 'export PATH=')"
+
+# direnv
+[[ $commands[direnv] ]] && eval "$(direnv hook zsh)"
 
 fpath=(
   ${ASDF_DIR}/completions
@@ -56,8 +60,10 @@ if [[ -n "$key_info" ]]; then
   bindkey -M viins "$key_info[Control]e" vi-add-eol
 fi
 
-# kuectl completion
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+if [[ `command -v kubectl` ]]; then
+  source <(kubectl completion zsh)
+fi
+
 # yarn completion
 if [[ -s "${ZDOTDIR:-$HOME}/yarn-autocompletions/yarn-autocompletions.plugin.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/yarn-autocompletions/yarn-autocompletions.plugin.zsh"

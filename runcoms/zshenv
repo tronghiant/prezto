@@ -1,5 +1,6 @@
-export ZDOTDIR="$HOME/.config/zsh"
-export GNUPGHOME="$HOME/.config/gnupg"
+export XDG_CONFIG_HOME="$HOME/.config"
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
 
 #
 # Defines environment variables.
@@ -12,5 +13,3 @@ export GNUPGHOME="$HOME/.config/gnupg"
 if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
-
-export DO=dan@167.172.79.88

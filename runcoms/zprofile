@@ -50,6 +50,7 @@ typeset -gU cdpath fpath mailpath path
 
 # Set the list of directories that Zsh searches for programs.
 path=(
+  $HOME/.local/bin(N)
   $HOME/{,.}{,s}bin(N)
   $HOME/go/bin(N)
   $HOME/Library/Application Support/multipass/bin(N)
@@ -58,6 +59,7 @@ path=(
   $HOME/Library/Android/sdk/cmdline-tools/latest/bin(N)
   $HOME/Library/Android/sdk/build-tools/30.0.3(N)
   /opt/{homebrew,local}/{,s}bin(N)
+  /opt/homebrew/opt/mysql@5.7/bin(N)
   /usr/local/{,s}bin(N)
   /usr/local/opt/coreutils/libexec/gnubin(N)
   $path
@@ -87,18 +89,34 @@ if [[ -o interactive ]]; then
 fi
 
 
-# ruby bundler
-# https://bundler.io/man/bundle-config.1.html
-export BUNDLE_GITHUB__COM=****************************************:x-oauth-basic
+# ruby
+## Ref: https://github.com/rbenv/ruby-build/wiki#macos
 
-# mysql
-export BUNDLE_BUILD__MYSQL=--with-mysql-config=$(which mysql_config)
+### For Ruby versions 2.x–3.0:
+### brew install openssl@1.1 readline libyaml gmp
+### export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 
-# gem install mysql2 -v '0.5.3' --source 'https://rubygems.org/'
-# export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)"
-# export BUNDLE_BUILD__MYSQL2="--with-opt-dir=$(brew --prefix openssl)"
+### For Ruby 3.1 and above requires OpenSSL 3
+### brew install openssl@3 readline libyaml gmp
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
 
-# install mysql2 gem by linking it with mysql 5.7 homebrew
-# https://gist.github.com/rizalp/d776a08a538c5738e821265816ecbccd
-# gem install mysql2 -v '0.5.3' -- --with-ldflags=-L/usr/local/opt/mysql/lib --with-cppflags=-I/usr/local/opt/mysql/include --with-ldflags=-L/usr/local/opt/openssl/lib --with-cppflags=-I/usr/local/opt/openssl/include
-# gem install mysql2 -v '0.5.3' --source 'https://rubygems.org/'
+
+# 🚨🚨🚨 PRIVATE env var, DONT commit 🚨🚨🚨
+export MY_GITHUB_PAT=****************************************
+
+## https://bundler.io/man/bundle-config.1.html
+export BUNDLE_GITHUB__COM=$MY_GITHUB_PAT:x-oauth-basic
+export BUNDLE_RUBYGEMS__PKG__GITHUB__COM=tronghiant:$MY_GITHUB_PAT
+
+
+## About `mysql2` gem
+## ref: https://gist.github.com/rizalp/d776a08a538c5738e821265816ecbccd
+## to install mysql2 gem, we need to install its dependency: mysql (or mysql-client if you want smaller dependency size)
+## brew install mysql-client@5.7
+## Then we can install it `gem install 'mysql2:>=0.5.5'`
+
+
+# 🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨
+# 🚨🚨🚨 PRIVATE env vars start from below line, DONT commit 🚨🚨🚨
+# 🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨
+
