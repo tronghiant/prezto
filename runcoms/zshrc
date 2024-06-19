@@ -89,5 +89,5 @@ if [ -f $HOME/google-cloud-sdk/completion.zsh.inc ]; then . $HOME/google-cloud-s
 
 
 # asdf
-[[ -e ~/.asdf/asdf.sh ]] && . ~/.asdf/asdf.sh # https://asdf-vm.com/#/core-manage-asdf
-[[ -e ~/.asdf/plugins/java/set-java-home.zsh ]] && . ~/.asdf/plugins/java/set-java-home.zsh
+[[ -e "${XDG_CONFIG_HOME}/asdf/asdf.sh" ]] && . "${XDG_CONFIG_HOME}/asdf/asdf.sh" # https://asdf-vm.com/#/core-manage-asdf
+# [[ -e ~/.asdf/plugins/java/set-java-home.zsh ]] && . ~/.asdf/plugins/java/set-java-home.zsh

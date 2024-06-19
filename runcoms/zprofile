@@ -32,7 +32,8 @@ fi
 #
 
 if [[ -z "$LANG" ]]; then
-  export LANG='en_US.UTF-8'
+  export LANG='en'
+  export LC_ALL=en_US.UTF-8
   # export LANG='ja_JP.UTF-8'
 fi
 
@@ -88,6 +89,10 @@ if [[ -o interactive ]]; then
   export KEYTIMEOUT=1
 fi
 
+if [[ -s "${ZDOTDIR:-$HOME}/.zprofile.private" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprofile.private"
+fi
+
 
 # ruby
 ## Ref: https://github.com/rbenv/ruby-build/wiki#macos
@@ -100,10 +105,6 @@ fi
 ### brew install openssl@3 readline libyaml gmp
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
 
-
-# 🚨🚨🚨 PRIVATE env var, DONT commit 🚨🚨🚨
-export MY_GITHUB_PAT=****************************************
-
 ## https://bundler.io/man/bundle-config.1.html
 export BUNDLE_GITHUB__COM=$MY_GITHUB_PAT:x-oauth-basic
 export BUNDLE_RUBYGEMS__PKG__GITHUB__COM=tronghiant:$MY_GITHUB_PAT
@@ -114,9 +115,4 @@ export BUNDLE_RUBYGEMS__PKG__GITHUB__COM=tronghiant:$MY_GITHUB_PAT
 ## to install mysql2 gem, we need to install its dependency: mysql (or mysql-client if you want smaller dependency size)
 ## brew install mysql-client@5.7
 ## Then we can install it `gem install 'mysql2:>=0.5.5'`
-
-
-# 🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨
-# 🚨🚨🚨 PRIVATE env vars start from below line, DONT commit 🚨🚨🚨
-# 🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨
 
